@@ -4,15 +4,16 @@ const MILISECOND = 1;
 const SECONND = 1000;
 const log = console.log;
 let balls = [];
-for (let i=0;i<2;i++){
+// let n = parseInt(prompt(' Enter the ball number'));
+for (let i=0;i<7;i++){
     balls[balls.length] = {
         // x : Math.floor(Math.random()*(VERY_RIGHT-this.r) +this.r),
         // y : Math.floor(Math.random()*(VERY_BOTTOM-this.r) +this.r),
-        x : Math.floor(Math.random()*VERY_RIGHT),
-        y : Math.floor(Math.random()*VERY_BOTTOM),
+        x : Math.floor(Math.random()*(VERY_RIGHT-100))+50,
+        y : Math.floor(Math.random()*(VERY_BOTTOM-100))+50,
         vx : 1,
         vy : 1,
-        r : Math.floor(Math.random()*20)+30,
+        r : Math.floor(Math.random()*40)+10,
         color : getRandomColor()
     };
 }
