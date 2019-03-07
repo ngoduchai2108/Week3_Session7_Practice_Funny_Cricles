@@ -5,6 +5,46 @@
     <title>Funny Cricle</title>
 </head>
 <body>
+<canvas id="myCanvas" width="1368px" height="768"style="border: 1px solid #d3d3d3;"></canvas>
+<script>
+    function cricle(x, y, radius) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+    }
 
+    function getRandomHex() {
+        return Math.floor(Math.random() * 255)
+    }
+
+    function getRandomColor() {
+        let red = getRandomHex();
+        let green = getRandomHex();
+        let blue = getRandomHex();
+        return "rgb(" + red + ',' + green + ',' + blue + ')';
+    }
+
+    function creatCricle() {
+        let ctx = document.getElementById('myCanvas').getContext('2d');
+        let radius = Math.floor(Math.random() * 100);
+        let color = getRandomColor();
+        let x = Math.floor(Math.random() * window.innerWidth);
+        let y = Math.floor(Math.random() * window.innerHeight);
+        let Cricle = new cricle(x, y, radius);
+        ctx.beginPath();
+        ctx.arc(Cricle.x, Cricle.y, Cricle.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = color;
+        ctx.fill();
+    }
+
+    function creatMultipleCricle() {
+        for (let i = 0; i < 30; i++) {
+            creatCricle();
+        }
+    }
+
+    creatMultipleCricle();
+creatCricle();
+</script>
 </body>
 </html>
