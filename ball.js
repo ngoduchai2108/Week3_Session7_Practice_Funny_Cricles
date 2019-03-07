@@ -9,21 +9,28 @@ for (let i=0;i<n;i++){
     balls[balls.length] = {
         // x : Math.floor(Math.random()*(VERY_RIGHT-this.r) +this.r),
         // y : Math.floor(Math.random()*(VERY_BOTTOM-this.r) +this.r),//sai
-        x : Math.floor(Math.random()*(VERY_RIGHT-100))+50,
-        y : Math.floor(Math.random()*(VERY_BOTTOM-100))+50,
+        x : Math.floor(Math.random()*(VERY_RIGHT-200))+100,
+        y : Math.floor(Math.random()*(VERY_BOTTOM-200))+100,
         vx : Math.floor(Math.random()*3)+1,
         vy : Math.floor(Math.random()*3)+1,
-        r : Math.floor(Math.random()*40)+10,
+        r : Math.floor(Math.random()*20)+80,
         color : getRandomColor()
     };
 }
-
+function checkDistance(x1,y1,r1,x2,y2,r2) {
+    let d = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    if (d<r1+r2){
+        return false;
+    }
+    return true;
+}
 // function show() {
     function drawWar() {
         setTimeout(function () {
             let pen = document.getElementById("myCanvas").getContext('2d')
             pen.clearRect(0,0,VERY_RIGHT,VERY_BOTTOM);
             // drawBall(ball.x,ball.y,ball.r)
+
             for (let ball of balls){
                 if (ball.x>VERY_RIGHT - ball.r || ball.x < ball.r){
                     ball.vx = -ball.vx
@@ -31,6 +38,22 @@ for (let i=0;i<n;i++){
                 if (ball.y>VERY_BOTTOM - ball.r || ball.y < ball.r){
                     ball.vy = -ball.vy
                 }
+                for (let i=0; i<n;i++){
+                    for (let j=0;j<n;j++){
+                        if (i===j){
+                            continue;
+                        }
+                        else {
+                            if (checkDistance(balls[i].x, balls[i].y, balls[i].r, balls[j].x, balls[j].y, balls[j].r,)===false){
+                                balls[i].vx = -balls[i].vx;
+                                balls[i].vy = -balls[i].vy;
+                                balls[j].vx = -balls[j].vx;
+                                balls[j].vy = -balls[j].vy;
+                            }
+                        }
+                    }
+                }
+                
                 pen.beginPath();
                 pen.arc(ball.x, ball.y, ball.r, 0, 2*Math.PI)
                 pen.fillStyle = ball.color;
