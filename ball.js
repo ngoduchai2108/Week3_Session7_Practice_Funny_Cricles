@@ -12,7 +12,8 @@ for (let i=0;i<2;i++){
         y : Math.floor(Math.random()*VERY_BOTTOM),
         vx : 1,
         vy : 1,
-        r : 30
+        r : Math.floor(Math.random()*20)+30,
+        color : getRandomColor()
     };
 }
 
@@ -30,7 +31,8 @@ function drawWar() {
             }
             pen.beginPath();
             pen.arc(ball.x, ball.y, ball.r, 0, 2*Math.PI)
-            pen.stroke();
+            pen.fillStyle = ball.color;
+            pen.fill();
 
             ball.x +=ball.vx;
             ball.y +=ball.vy;
@@ -39,6 +41,17 @@ function drawWar() {
     }, 10*MILISECOND)
 }
 drawWar();
+
+function getRandomHex() {
+    return Math.floor(Math.random() * 255)
+}
+
+function getRandomColor() {
+    let red = getRandomHex();
+    let green = getRandomHex();
+    let blue = getRandomHex();
+    return "rgb(" + red + ',' + green + ',' + blue + ')';
+}
 
 
 
