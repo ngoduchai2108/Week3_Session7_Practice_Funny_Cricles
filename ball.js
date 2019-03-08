@@ -17,13 +17,13 @@ for (let i=0;i<n;i++){
         color : getRandomColor()
     };
 }
-function checkDistance(x1,y1,r1,x2,y2,r2) {
-    let d = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
-    if (d<r1+r2){
-        return false;
-    }
-    return true;
-}
+// function checkDistance(x1,y1,r1,x2,y2,r2) {
+//     let d = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+//     if (d<r1+r2){
+//         return false;
+//     }
+//     return true;
+// }
 // function show() {
     function drawWar() {
         setTimeout(function () {
@@ -52,6 +52,7 @@ function checkDistance(x1,y1,r1,x2,y2,r2) {
                         }
                     }
                 }
+
                 pen.beginPath();
                 pen.arc(ball.x, ball.y, ball.r, 0, 2*Math.PI)
                 pen.fillStyle = ball.color;
@@ -59,6 +60,15 @@ function checkDistance(x1,y1,r1,x2,y2,r2) {
 
                 ball.x +=ball.vx;
                 ball.y +=ball.vy;
+
+            }
+            for (let i=0; i<n;i++){
+                for (let j=i+1;j<n;j++) {
+                    if (balls[i].color === balls[j].color){
+                        alert('You Win!!!')
+                        break;
+                    }
+                }
             }
 
             drawWar()
@@ -67,17 +77,25 @@ function checkDistance(x1,y1,r1,x2,y2,r2) {
     drawWar();
 // }
 // show();
+//
 
-function getRandomHex() {
-    return Math.floor(Math.random() * 255)
-}
-
+//Cach 1
 function getRandomColor() {
-    let red = getRandomHex();
-    let green = getRandomHex();
-    let blue = getRandomHex();
-    return "rgb(" + red + ',' + green + ',' + blue + ')';
+    let color = ["AABBCC",  "11CCFF", "22DDCC", "AAFF22"]
+    return "#"+color[Math.floor(Math.random()*4)];
+
 }
+//Cach 2
+// function getRandomHex() {
+//     return Math.floor(Math.random() * 255)
+// }
+//
+// function getRandomColor() {
+//     let red = getRandomHex();
+//     let green = getRandomHex();
+//     let blue = getRandomHex();
+//     return "rgb(" + red + ',' + green + ',' + blue + ')';
+// }
 
 
 
