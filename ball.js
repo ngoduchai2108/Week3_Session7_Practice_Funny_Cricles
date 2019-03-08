@@ -39,8 +39,8 @@ for (let i=0;i<n;i++){
                     ball.vy = -ball.vy
                 }
 
-                for (let i=0; i<n;i++){
-                    for (let j=i+1;j<n;j++){
+                for (let i=0; i<balls.length;i++){
+                    for (let j=i+1;j<balls.length;j++){
                         if (Math.sqrt((balls[i].x-balls[j].x) * (balls[i].x-balls[j].x)
                             + (balls[i].y-balls[j].y)*(balls[i].y-balls[j].y)) < balls[i].r+balls[j].r){
                             balls[i].vx = -balls[i].vx
@@ -49,6 +49,15 @@ for (let i=0;i<n;i++){
                             balls[j].vy = -balls[j].vy
                             balls[i].color = getRandomColor();
                             balls[j].color = getRandomColor();
+                            balls[balls.length] = {
+                                x : Math.floor(Math.random()*(VERY_RIGHT-100))+50,
+                                y : Math.floor(Math.random()*(VERY_BOTTOM-100))+50,
+                                vx : Math.floor(Math.random()*3)+3,
+                                vy : Math.floor(Math.random()*3)+3,
+                                r : Math.floor(Math.random()*10)+40,
+                                color : getRandomColor()
+                            }
+                            break;
                         }
                     }
                 }
@@ -62,14 +71,15 @@ for (let i=0;i<n;i++){
                 ball.y +=ball.vy;
 
             }
-            for (let i=0; i<n;i++){
-                for (let j=i+1;j<n;j++) {
-                    if (balls[i].color === balls[j].color){
-                        alert('You Win!!!')
-                        break;
-                    }
-                }
-            }
+//dieu kien dung
+            // for (let i=0; i<n;i++){
+            //     for (let j=i+1;j<n;j++) {
+            //         if (balls[i].color === balls[j].color){
+            //             alert('You Win!!!')
+            //             break;
+            //         }
+            //     }
+            // }
 
             drawWar()
         }, 10*MILISECOND)
