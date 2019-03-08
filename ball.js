@@ -9,11 +9,11 @@ for (let i=0;i<n;i++){
     balls[balls.length] = {
         // x : Math.floor(Math.random()*(VERY_RIGHT-this.r) +this.r),
         // y : Math.floor(Math.random()*(VERY_BOTTOM-this.r) +this.r),//sai
-        x : Math.floor(Math.random()*(VERY_RIGHT-200))+100,
-        y : Math.floor(Math.random()*(VERY_BOTTOM-200))+100,
-        vx : Math.floor(Math.random()*3)+1,
-        vy : Math.floor(Math.random()*3)+1,
-        r : Math.floor(Math.random()*20)+80,
+        x : Math.floor(Math.random()*(VERY_RIGHT-100))+50,
+        y : Math.floor(Math.random()*(VERY_BOTTOM-100))+50,
+        vx : Math.floor(Math.random()*3)+3,
+        vy : Math.floor(Math.random()*3)+3,
+        r : Math.floor(Math.random()*10)+40,
         color : getRandomColor()
     };
 }
@@ -38,22 +38,20 @@ function checkDistance(x1,y1,r1,x2,y2,r2) {
                 if (ball.y>VERY_BOTTOM - ball.r || ball.y < ball.r){
                     ball.vy = -ball.vy
                 }
+
                 for (let i=0; i<n;i++){
-                    for (let j=0;j<n;j++){
-                        if (i===j){
-                            continue;
-                        }
-                        else {
-                            if (checkDistance(balls[i].x, balls[i].y, balls[i].r, balls[j].x, balls[j].y, balls[j].r,)===false){
-                                balls[i].vx = -balls[i].vx;
-                                balls[i].vy = -balls[i].vy;
-                                balls[j].vx = -balls[j].vx;
-                                balls[j].vy = -balls[j].vy;
-                            }
+                    for (let j=i+1;j<n;j++){
+                        if (Math.sqrt((balls[i].x-balls[j].x) * (balls[i].x-balls[j].x)
+                            + (balls[i].y-balls[j].y)*(balls[i].y-balls[j].y)) < balls[i].r+balls[j].r){
+                            balls[i].vx = -balls[i].vx
+                            balls[i].vy = -balls[i].vy
+                            balls[j].vx = -balls[j].vx
+                            balls[j].vy = -balls[j].vy
+                            balls[i].color = getRandomColor();
+                            balls[j].color = getRandomColor();
                         }
                     }
                 }
-                
                 pen.beginPath();
                 pen.arc(ball.x, ball.y, ball.r, 0, 2*Math.PI)
                 pen.fillStyle = ball.color;
@@ -62,6 +60,7 @@ function checkDistance(x1,y1,r1,x2,y2,r2) {
                 ball.x +=ball.vx;
                 ball.y +=ball.vy;
             }
+
             drawWar()
         }, 10*MILISECOND)
     }
