@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Funny Circles</title>
+    <!--<script src="main.js"></script>-->
+</head>
+<body>
+<center>
+    <table border="1" cellpadding="10" width="1000">
+        <tr><h1>Game Cricle</h1></tr>
+        <tr>
+            <th>Player 1:<select id="ball1">
+                <option value="rgb(0,200,0)">Bong GREEN</option>
+                <option value="rgb(200,0,0)">Bong RED</option>
+                <option value="rgb(0,0,200)">Bong BLUE</option>
+            </select>
+                <p id="result1"></p></th>
+            <th>Player 2:<select id="ball2">
+                <option value="rgb(200,0,0)">Bong RED</option>
+                <option value="rgb(0,200,0)">Bong GREEN</option>
+                <option value="rgb(0,0,200)">Bong BLUE</option>
+            </select>
+                <p id="result2"></p></th>
+            <th>
+                <button onclick="htime=moveCircles();" type="button">PLAY</button>
+                <button onclick="clearTimeout(htime)" type="button">STOP</button>
+            </th>
+
+        </tr>
+
+    </table>
+    <br/>
+    <canvas height="400px" id="myCanvas" style="border: 5px solid #d3d3d3;" width="1000px"></canvas>
+</center>
+<script>
+    const VERY_HEIGH = 400;
+    const VERY_WIDTH = 1000;
+    let circles = [];
+    for (let i = 0; i < 2; i++) {
+        circles[circles.length] = {
+            x: randomX(),
+            y: randomY(),
+            r: 40,
+            vx: randomV(),
+            vy: randomV(),
+            hp: randomHP()
+        };
+    }
+    circles[0].color = document.getElementById('ball1').value;
+    circles[1].color = document.getElementById('ball2').value;
+    document.getElementById('result1').innerHTML = "HP : ";
+    document.getElementById('result2').innerHTML = "HP : ";
+
+    // function getRandomHex() {
+    //     return Math.floor(Math.random()*255);
+    // }
+    //
+    // function getRandomColor() {
+    //     let red = getRandomHex();
+    //     let blue = getRandomHex();
+    //     let green = getRandomHex();
+    //     return 'rgb(' + red + ',' + blue + ',' + green + ')';
+    // }
+
+    function randomX() {
+        return Math.random() * (VERY_WIDTH - 80) + 40;
+    }
+
+    function randomY() {
+        return Math.random() * (VERY_HEIGH - 80) + 40;
+    }
+
+    function randomR() {
+        return Math.floor(Math.random() * 30) + 10;
+    }
+
+    function randomV() {
+        return Math.floor(Math.random() * 3) + 3;
+    }
+
+    function randomHP() {
+        return Math.floor(Math.random() * 20) + 30;
+    }
+
+
+    function moveCircles() {
+        setTimeout(function () {
+            let pen = document.getElementById("myCanvas").getContext('2d');
+            pen.clearRect(0, 0, VERY_WIDTH, VERY_HEIGH);
+
+            for (let circle of circles) {
+                if (circle[0].hp ===0){
+                    alert('Play 1 Win!!!')
+                }
+                if (circle[1].hp ===0){
+                    alert('Play 2 Win!!!')
+                }
+
+                if (circle.x > VERY_WIDTH - circle.r || circle.x < circle.r) {
+                    circle.vx = -circle.vx;
+                    circle.hp -= Math.floor(Math.random() * 2);
+                }
+                if (circle.y > VERY_HEIGH - circle.r || circle.y < circle.r) {
+                    circle.vy = -circle.vy;
+                    circle.hp -= Math.floor(Math.random());
+                }
+                if (Math.sqrt((circles[0].x - circles[1].x) * (circles[0].x - circles[1].x)
+                    + (circles[0].y - circles[1].y) * (circles[0].y - circles[1].y)) < (circles[0].r + circles[1].r)) {
+                    circle.vx = -circle.vx;
+                    circle.vy = -circle.vy;
+                    circles[0].hp -= Math.floor(Math.random() * 3);
+                    circles[1].hp -= Math.floor(Math.random() * 3);
+                }
+                pen.beginPath();
+                pen.arc(circle.x, circle.y, circle.r, 0, Math.PI * 2);
+                pen.fillStyle = circle.color;
+                pen.fill();
+                pen.stroke();
+                document.getElementById('result1').innerHTML = "HP : " + circles[0].hp;
+                document.getElementById('result2').innerHTML = "HP : " + circles[1].hp;
+                circle.x += circle.vx;
+                circle.y += circle.vy;
+
+            }
+            moveCircles()
+        }, 10)
+    }
+
+</script>
+</body>
+</html>
